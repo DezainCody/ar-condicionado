@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimaTech Pro - Ar-Condicionado & Climatização</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0077BE;
+            --secondary-blue: #00A8E6;
+            --ice-blue: #E8F4F8;
+            --cool-gray: #6B7280;
+            --deep-blue: #1E3A8A;
+            --white: #FFFFFF;
+            --ice-white: #F8FEFF;
+            --light-blue: #DBEAFE;
+            --gradient-cool: linear-gradient(135deg, #0077BE 0%, #00A8E6 100%);
+            --gradient-ice: linear-gradient(135deg, #E8F4F8 0%, #FFFFFF 100%);
+            --shadow-cool: 0 10px 30px rgba(0, 119, 190, 0.2);
+            --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-cool);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            animation: pulse-cool 2s infinite;
+        }
+
+        @keyframes pulse-cool {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-cool);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide:nth-child(1) {
+            background-image: linear-gradient(rgba(0, 119, 190, 0.7), rgba(0, 168, 230, 0.7)), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+        }
+
+        .hero-slide:nth-child(2) {
+            background-image: linear-gradient(rgba(30, 58, 138, 0.7), rgba(0, 119, 190, 0.7)), url('https://images.unsplash.com/photo-1604709177225-055f99402ea3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+        }
+
+        .hero-slide:nth-child(3) {
+            background-image: linear-gradient(rgba(0, 168, 230, 0.7), rgba(232, 244, 248, 0.7)), url('https://images.unsplash.com/photo-1631545835208-4efce1d9e4c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 40px;
+            background: var(--gradient-cool);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-cool);
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 119, 190, 0.3);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Problems Section */
+        .problems {
+            padding: 120px 20px;
+            background: var(--gradient-ice);
+            position: relative;
+        }
+
+        .problems::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary-blue), transparent);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-cool);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--cool-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-cool);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-cool);
+        }
+
+        .problem-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-cool);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .problem-title {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .problem-description {
+            color: var(--cool-gray);
+            line-height: 1.8;
+        }
+
+        .benefits .section-title,
+        .testimonials .section-title {
+            color: var(--ice-white);
+        }
+
+        .benefits .section-subtitle,
+        .testimonials .section-subtitle {
+            color: rgba(248, 254, 255, 0.9);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 120px 20px;
+            background: var(--primary-blue);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 230, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .benefits-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 20px;
+            background: white;
+        }
+
+        .products-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .product-card {
+            background: var(--ice-blue);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-cool);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: var(--gradient-cool);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .product-info {
+            padding: 30px;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--cool-gray);
+            margin-bottom: 20px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .product-features li {
+            padding: 5px 0;
+            color: var(--cool-gray);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-blue);
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-btn {
+            background: var(--gradient-cool);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .product-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-cool);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 20px;
+            background: var(--gradient-ice);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--cool-gray);
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--cool-gray);
+            font-weight: 500;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 120px 20px;
+            background: white;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-cool);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-cool);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .blog-excerpt {
+            color: var(--cool-gray);
+            margin-bottom: 20px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--cool-gray);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 20px;
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 60px auto 0;
+            position: relative;
+        }
+
+        .testimonial {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .testimonial-text {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-role {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-rating {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #FFD700;
+        }
+
+        /* Contact Form */
+        .contact {
+            padding: 120px 20px;
+            background: var(--gradient-ice);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 168, 230, 0.1);
+        }
+
+        .contact-info {
+            padding-left: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-cool);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 120px 20px;
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            background: var(--ice-blue);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 25px;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 119, 190, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--cool-gray);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 25px 25px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            padding: 80px 20px 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-blue);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-info {
+                padding-left: 0;
+            }
+
+            .problems-grid,
+            .benefits-grid,
+            .products-showcase,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-snowflake"></i>
+                </div>
+                ClimaTech Pro
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-background">
+            <div class="hero-slide active"></div>
+            <div class="hero-slide"></div>
+            <div class="hero-slide"></div>
+        </div>
+        <div class="floating-elements">
+            <div class="snowflake" style="left: 10%; animation-duration: 3s; animation-delay: 0s;">❄</div>
+            <div class="snowflake" style="left: 20%; animation-duration: 4s; animation-delay: 1s;">❅</div>
+            <div class="snowflake" style="left: 30%; animation-duration: 3.5s; animation-delay: 0.5s;">❄</div>
+            <div class="snowflake" style="left: 40%; animation-duration: 5s; animation-delay: 1.8s;">❅</div>
+            <div class="snowflake" style="left: 50%; animation-duration: 3.2s; animation-delay: 0.3s;">❄</div>
+            <div class="snowflake" style="left: 60%; animation-duration: 4.5s; animation-delay: 2s;">❅</div>
+            <div class="snowflake" style="left: 70%; animation-duration: 3.8s; animation-delay: 1.2s;">❄</div>
+            <div class="snowflake" style="left: 80%; animation-duration: 4.2s; animation-delay: 0.8s;">❅</div>
+            <div class="snowflake" style="left: 90%; animation-duration: 3.6s; animation-delay: 1.5s;">❄</div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Clima Perfeito, Vida Confortável</h1>
+            <p class="hero-subtitle">Especialistas em climatização com mais de 15 anos transformando ambientes em oásis de conforto</p>
+            <a href="#contato" class="hero-cta">
+                <i class="fas fa-thermometer-half"></i>
+                Solicite seu Orçamento Gratuito
+            </a>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Você já passou por isso?</h2>
+                <p class="section-subtitle">Entendemos os desafios que você enfrenta e temos a solução perfeita</p>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="problem-title">Calor Insuportável</h3>
+                    <p class="problem-description">Não consegue ter uma noite de sono tranquila? O calor excessivo prejudica sua produtividade e bem-estar no trabalho e em casa.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="problem-title">Conta de Luz Alta</h3>
+                    <p class="problem-description">Ar-condicionado antigo consumindo energia demais? Equipamentos ineficientes podem triplicar sua conta de energia elétrica.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="problem-title">Manutenção Constante</h3>
+                    <p class="problem-description">Cansado de chamar técnicos toda hora? Equipamentos mal instalados quebram frequentemente e geram gastos desnecessários.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <h3 class="problem-title">Ar Poluído</h3>
+                    <p class="problem-description">Preocupado com a qualidade do ar? Sistemas sem filtros adequados espalham bactérias, fungos e partículas prejudiciais à saúde.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3 class="problem-title">Ruído Incômodo</h3>
+                    <p class="problem-description">Ar-condicionado muito barulhento? Equipamentos desregulados prejudicam o sono e a concentração de toda a família.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <div class="problem-icon">
+                        <i class="fas fa-thermometer-quarter"></i>
+                    </div>
+                    <h3 class="problem-title">Temperatura Desigual</h3>
+                    <p class="problem-description">Um ambiente gelado e outro quente? Má distribuição do ar causa desconforto e desperdício de energia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="benefits-content">
+                <div class="section-header fade-in">
+                    <h2 class="section-title">Por que escolher a ClimaTech Pro?</h2>
+                    <p class="section-subtitle">Nossos diferenciais garantem sua total satisfação</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3>15 Anos de Experiência</h3>
+                        <p>Especialistas certificados com vasta experiência em projetos residenciais e comerciais de grande porte.</p>
+                    </div>
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Economia de até 40%</h3>
+                        <p>Equipamentos inverter de última geração que reduzem drasticamente o consumo de energia elétrica.</p>
+                    </div>
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Garantia Estendida</h3>
+                        <p>5 anos de garantia total + manutenção preventiva gratuita no primeiro ano.</p>
+                    </div>
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Instalação em 24h</h3>
+                        <p>Equipe técnica especializada realiza instalações rápidas sem bagunça ou transtornos.</p>
+                    </div>
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Suporte 24/7</h3>
+                        <p>Atendimento emergencial disponível 24 horas, incluindo finais de semana e feriados.</p>
+                    </div>
+                    <div class="benefit-card fade-in">
+                        <div class="benefit-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Certificação PROCEL</h3>
+                        <p>Trabalhamos apenas com marcas premium certificadas pelo selo PROCEL de eficiência energética.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produtos" class="products">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Nossos Produtos em Destaque</h2>
+                <p class="section-subtitle">Soluções completas para todos os ambientes</p>
+            </div>
+            <div class="products-showcase">
+                <div class="product-card fade-in">
+                    <div class="product-image">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Split Hi-Wall Inverter</h3>
+                        <p class="product-description">Perfeito para residências, com tecnologia inverter para máxima economia.</p>
+                        <ul class="product-features">
+                            <li>Economia de energia até 40%</li>
+                            <li>Função sleep e timer</li>
+                            <li>Controle via WiFi/App</li>
+                            <li>Filtro antibacteriano</li>
+                        </ul>
+                        <div class="product-price">A partir de R$ 1.899</div>
+                        <button class="product-btn">Solicitar Orçamento</button>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-image">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">VRF Multi Split</h3>
+                        <p class="product-description">Solução corporativa para grandes ambientes com controle individualizado.</p>
+                        <ul class="product-features">
+                            <li>Até 64 evaporadoras por sistema</li>
+                            <li>Controle centralizado</li>
+                            <li>Recuperação de calor</li>
+                            <li>Monitoramento remoto</li>
+                        </ul>
+                        <div class="product-price">Sob Consulta</div>
+                        <button class="product-btn">Solicitar Projeto</button>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-image">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Self Container</h3>
+                        <p class="product-description">Climatização industrial para grandes espaços e processos específicos.</p>
+                        <ul class="product-features">
+                            <li>Alta capacidade frigorífica</li>
+                            <li>Instalação externa</li>
+                            <li>Baixa manutenção</li>
+                            <li>Controle de umidade</li>
+                        </ul>
+                        <div class="product-price">A partir de R$ 15.000</div>
+                        <button class="product-btn">Consultar Especialista</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="about">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Sobre a ClimaTech Pro</h2>
+                <p class="section-subtitle">Sua tranquilidade é nossa prioridade</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Há mais de 15 anos, a ClimaTech Pro é sinônimo de excelência em climatização. Começamos como uma pequena empresa familiar e hoje somos referência no mercado, tendo climatizado mais de 10.000 ambientes em todo o país.</p>
+                    
+                    <p>Nossa missão é proporcionar conforto térmico ideal através de soluções inteligentes e sustentáveis. Cada projeto é único e recebe atenção personalizada de nossa equipe de engenheiros especializados.</p>
+                    
+                    <p>Investimos constantemente em tecnologia e capacitação. Nossos técnicos são certificados pelas principais fabricantes e participam regularmente de treinamentos internacionais para estar sempre atualizados com as últimas inovações do setor.</p>
+                </div>
+                <div class="about-stats fade-in">
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Anos de Experiência</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10k+</div>
+                        <div class="stat-label">Projetos Realizados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Clientes Satisfeitos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Suporte Técnico</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Blog & Inspirações</h2>
+                <p class="section-subtitle">Dicas valiosas para otimizar sua climatização</p>
+            </div>
+            <div class="blog-grid">
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">5 Dicas para Economizar Energia com Ar-Condicionado</h3>
+                        <p class="blog-excerpt">Descubra como reduzir sua conta de luz em até 40% com práticas simples e eficientes de uso do ar-condicionado.</p>
+                        <div class="blog-meta">
+                            <span>Por ClimaTech Pro</span>
+                            <span>5 min de leitura</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Como Escolher o Ar-Condicionado Ideal para sua Casa</h3>
+                        <p class="blog-excerpt">Guia completo com fatores essenciais para escolher o equipamento perfeito para cada ambiente da sua residência.</p>
+                        <div class="blog-meta">
+                            <span>Por Engº João Silva</span>
+                            <span>8 min de leitura</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card fade-in">
+                    <div class="blog-image">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Manutenção Preventiva: Prolongue a Vida do seu Equipamento</h3>
+                        <p class="blog-excerpt">Aprenda a importância da manutenção regular e como ela pode evitar 90% dos problemas mais comuns.</p>
+                        <div class="blog-meta">
+                            <span>Por Equipe Técnica</span>
+                            <span>6 min de leitura</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">O que nossos clientes dizem</h2>
+                <p class="section-subtitle">Depoimentos reais de quem confia em nosso trabalho</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial fade-in">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Excelente serviço! A equipe da ClimaTech Pro instalou o ar-condicionado na minha casa em apenas 4 horas. Ficou perfeito e já estou sentindo a diferença na conta de luz. Recomendo!"</p>
+                    <div class="testimonial-author">Maria Santos</div>
+                    <div class="testimonial-role">Residencial - Barra da Tijuca</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-subtitle">Solicite seu orçamento gratuito e sem compromisso</p>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form fade-in">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone/WhatsApp *</label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-ambiente">Tipo de Ambiente</label>
+                        <select id="tipo-ambiente" name="tipo-ambiente">
+                            <option value="">Selecione...</option>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Área Aproximada (m²)</label>
+                        <input type="number" id="area" name="area" placeholder="Ex: 50">
+                    </div>
+                    <div class="form-group">
+                        <label for="servico">Tipo de Serviço</label>
+                        <select id="servico" name="servico">
+                            <option value="">Selecione...</option>
+                            <option value="instalacao">Instalação Nova</option>
+                            <option value="manutencao">Manutenção</option>
+                            <option value="reparo">Reparo</option>
+                            <option value="projeto">Projeto Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="urgencia">Urgência</label>
+                        <select id="urgencia" name="urgencia">
+                            <option value="">Selecione...</option>
+                            <option value="normal">Normal (até 7 dias)</option>
+                            <option value="rapida">Rápida (até 3 dias)</option>
+                            <option value="urgente">Urgente (24h)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Detalhes do Projeto</label>
+                        <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva seu projeto, necessidades específicas ou dúvidas..."></textarea>
+                    </div>
+                    <button type="submit" class="product-btn">Solicitar Orçamento Gratuito</button>
+                </form>
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>(11) 99999-9999</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>(11) 99999-9999</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>E-mail</h4>
+                            <p>contato@climatechpro.com.br</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>Rua do Clima, 123 - Centro<br>São Paulo - SP</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Horário de Atendimento</h4>
+                            <p>Segunda à Sexta: 8h às 18h<br>Sábado: 8h às 12h<br>Emergências: 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-subtitle">Tire suas dúvidas mais comuns</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Qual a diferença entre ar-condicionado comum e inverter?
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O ar-condicionado inverter ajusta automaticamente a velocidade do compressor, mantendo a temperatura constante e economizando até 40% de energia comparado ao modelo comum.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Quanto tempo demora uma instalação?
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Uma instalação residencial típica leva entre 2 a 4 horas. Para projetos comerciais ou industriais, o prazo é definido conforme a complexidade do projeto.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Vocês fazem manutenção em outras marcas?
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! Nossa equipe técnica é capacitada para manutenção e reparo de todas as principais marcas do mercado, independente de onde foi adquirido.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Qual a garantia oferecida?
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Oferecemos 5 anos de garantia total (equipamento + instalação) e manutenção preventiva gratuita durante o primeiro ano.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Como calcular a potência ideal para meu ambiente?
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Fazemos uma visita técnica gratuita onde analisamos área, pé-direito, isolamento térmico, exposição solar e outras variáveis para dimensionar o equipamento perfeito.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ClimaTech Pro</h3>
+                    <p>Especialistas em climatização há mais de 15 anos. Sua satisfação é nossa prioridade.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Serviços</h3>
+                    <ul>
+                        <li><a href="#">Instalação Residencial</a></li>
+                        <li><a href="#">Projetos Comerciais</a></li>
+                        <li><a href="#">Climatização Industrial</a></li>
+                        <li><a href="#">Manutenção Preventiva</a></li>
+                        <li><a href="#">Assistência Técnica</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Produtos</h3>
+                    <ul>
+                        <li><a href="#">Split Hi-Wall</a></li>
+                        <li><a href="#">Split Cassete</a></li>
+                        <li><a href="#">VRF Multi Split</a></li>
+                        <li><a href="#">Self Container</a></li>
+                        <li><a href="#">Chiller</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li>(11) 99999-9999</li>
+                        <li>contato@climatechpro.com.br</li>
+                        <li>Rua do Clima, 123 - Centro</li>
+                        <li>São Paulo - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ClimaTech Pro. Todos os direitos reservados. CNPJ: 12.345.678/0001-90</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Hero Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const totalSlides = slides.length;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000);
+
+        // Scroll Animation
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header Background on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.08)';
+            }
+            
+            handleScrollAnimation();
+        });
+
+        // Form Submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Create WhatsApp message
+            let message = `*Novo Orçamento - ClimaTech Pro*\n\n`;
+            message += `*Nome:* ${data.nome}\n`;
+            message += `*Email:* ${data.email}\n`;
+            message += `*Telefone:* ${data.telefone}\n`;
+            
+            if (data['tipo-ambiente']) message += `*Tipo de Ambiente:* ${data['tipo-ambiente']}\n`;
+            if (data.area) message += `*Área:* ${data.area}m²\n`;
+            if (data.servico) message += `*Serviço:* ${data.servico}\n`;
+            if (data.urgencia) message += `*Urgência:* ${data.urgencia}\n`;
+            if (data.mensagem) message += `*Detalhes:* ${data.mensagem}\n`;
+            
+            // Redirect to WhatsApp
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/5511999999999?text=${encodedMessage}`, '_blank');
+            
+            // Reset form
+            this.reset();
+            alert('Formulário enviado! Você será redirecionado para o WhatsApp.');
+        });
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            handleScrollAnimation();
+        });
+
+        // Product buttons
+        document.querySelectorAll('.product-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productName = btn.closest('.product-card').querySelector('.product-name').textContent;
+                const message = `Olá! Gostaria de solicitar um orçamento para: ${productName}`;
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/5511999999999?text=${encodedMessage}`, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
